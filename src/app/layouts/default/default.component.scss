@@ -1,0 +1,10 @@
+.default-layout {
+  display: flex;
+  flex-flow: column wrap;
+
+  &__header {
+    h1 {
+      margin: 0;
+    }
+  }
+}

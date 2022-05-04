@@ -1,0 +1,7 @@
+<!-- in a real-world app i would wrap external libraries with custom components -->
+<mat-slider [(ngModel)]="numberOfRows"></mat-slider>
+<ul *ngIf="users$ | async as users">
+  <li  
+  *ngFor="let user of users"
+  >{{user.name}}</li>
+</ul>
