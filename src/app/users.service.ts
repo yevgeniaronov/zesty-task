@@ -15,9 +15,9 @@ export class UsersService {
     private apiClient: ApiClientService
   ) { }
   
-  public addUser(){
-    
-     this.usersSubscription =  this.apiClient.getRandomUser().subscribe((user) => this.users.next([...this.users.value, user]))
+  public getUsers(count: number){
+    this.usersSubscription.unsubscribe() // cancels previous call for rows
+    this.usersSubscription =  this.apiClient.getUsers(count).subscribe((users) => this.users.next(users))
     
       
   }

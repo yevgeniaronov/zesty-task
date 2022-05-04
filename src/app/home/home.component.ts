@@ -20,10 +20,11 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.users$ =  this.usersService.users$
-    this.usersService.addUser()
   }
 
-
+  onRowChange(count: number) {
+    this.usersService.getUsers(count)
+  }
   
 
 }
