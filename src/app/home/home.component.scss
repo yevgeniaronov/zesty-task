@@ -8,4 +8,10 @@
       margin-inline-end: 1rem;
     }
   }
+
+  &__table {
+    .table {
+      width: 100%;
+    }
+  }
 }
