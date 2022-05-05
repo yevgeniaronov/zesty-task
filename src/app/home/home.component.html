@@ -30,7 +30,7 @@
       <tr
         class="table__row"
         mat-row
-        (click)="toggleDialog(row)"
+        (click)="openDialog(row)"
         *matRowDef="let row; columns: tableData.keys"
       ></tr>
     </table>

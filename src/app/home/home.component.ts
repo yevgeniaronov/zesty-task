@@ -33,6 +33,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.users$ = this.usersService.users$;
+
+    this.dialog.afterAllClosed.subscribe(() => {
+      this.userModalOpen = false;
+    });
   }
 
   createUserFetchInterval() {
@@ -62,7 +66,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getUsers(count);
   }
 
-  toggleDialog(item: any, open: boolean = true) {
+  openDialog(item: any) {
+    this.userModalOpen = true;
     this.dialog.open(DialogContentComponent, { data: item });
   }
 
