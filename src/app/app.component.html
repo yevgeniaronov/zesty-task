@@ -1,7 +1,5 @@
 <!-- in a real-world app i would use a routing system that would apply a different layout per route, here we have only one route so that's redundant -->
-<app-default-layout> 
-
+<app-default-layout>
   <app-home></app-home>
-  
-  </app-default-layout>
-  
+  <span *ngIf="isLoading" footer>Loading...</span>
+</app-default-layout>
