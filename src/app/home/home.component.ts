@@ -1,8 +1,10 @@
+import { DialogContentComponent } from './dialog-content/dialog-content.component';
 import { Observable } from 'rxjs';
 import { User } from './../types/user';
 // in real-world app always prefer barrel/alias imports over relatives
 import { UsersService } from './../users.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 const tableColumns = [
   { key: 'name', text: 'Name' },
@@ -15,9 +17,10 @@ const tableColumns = [
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   numberOfRows = 0;
   userModalOpen = false;
+  fetchUsersInterval?: any;
 
   tableData = {
     keys: tableColumns.map((item) => item.key),
@@ -26,17 +29,44 @@ export class HomeComponent implements OnInit {
 
   users$?: Observable<User[]>;
 
-  constructor(private usersService: UsersService) {}
+  constructor(private usersService: UsersService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.users$ = this.usersService.users$;
   }
 
-  onRowChange(count: number) {
+  createUserFetchInterval() {
+    clearInterval(this.fetchUsersInterval);
+    this.fetchUsersInterval = setInterval(() => {
+      if (!this.userModalOpen) {
+        this.refillData();
+      }
+    }, 10000);
+  }
+
+  clearUsers() {
+    this.usersService.clearUsers();
+  }
+
+  refillData() {
+    this.clearUsers();
+    this.getUsers(this.numberOfRows);
+  }
+
+  getUsers(count: number) {
     this.usersService.getUsers(count);
+    this.createUserFetchInterval();
+  }
+
+  onRowChange(count: number) {
+    this.getUsers(count);
   }
 
   toggleDialog(item: any, open: boolean = true) {
-    console.log(item);
+    this.dialog.open(DialogContentComponent, { data: item });
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.fetchUsersInterval);
   }
 }
