@@ -1,0 +1,38 @@
+<div class="home">
+  <!-- slider and table should be exported into sepeate component files -->
+  <div class="home__slider slider">
+    <span class="slider__text">Number of rows: {{ numberOfRows }}</span>
+    <!-- in a real-world app i would wrap external libraries with custom components -->
+    <mat-slider
+      [(ngModel)]="numberOfRows"
+      (ngModelChange)="onRowChange($event)"
+    ></mat-slider>
+  </div>
+
+  <div class="home__table" *ngIf="users$ | async as users">
+    <table class="table" mat-table [dataSource]="users">
+      <ng-container
+        *ngFor="let column of tableData.tableColumns"
+        [matColumnDef]="column.key"
+      >
+        <th class="table__column" mat-header-cell *matHeaderCellDef>
+          {{ column.text }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <img
+            *ngIf="column.key === 'image_url'; else notImage"
+            [src]="element[column.key]"
+          />
+          <ng-template #notImage>{{ element[column.key] }}</ng-template>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="tableData.keys"></tr>
+      <tr
+        class="table__row"
+        mat-row
+        (click)="openDialog(row)"
+        *matRowDef="let row; columns: tableData.keys"
+      ></tr>
+    </table>
+  </div>
+</div>

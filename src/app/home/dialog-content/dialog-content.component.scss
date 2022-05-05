@@ -1,0 +1,7 @@
+.dialog-content {
+  display: flex;
+  &__profile-picture {
+    margin-inline-end: 2rem;
+    border-radius: 10rem;
+  }
+}

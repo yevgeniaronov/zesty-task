@@ -1,0 +1,26 @@
+<div class="dialog-content">
+  <img
+    class="dialog-content__profile-picture"
+    [src]="data.image_url"
+    alt=""
+    srcset=""
+  />
+
+  <div class="dialog-content__profile-details">
+    <div>
+      <div><b>Name:</b></div>
+      {{ data.name }}
+    </div>
+    <div>
+      <div><b>Last Name:</b></div>
+      {{ data.last_name }}
+    </div>
+    <div>
+      <div>
+        <div><b>Age:</b></div>
+        {{ data.age }}
+      </div>
+      <div></div>
+    </div>
+  </div>
+</div>
